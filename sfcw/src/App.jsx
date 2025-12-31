@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './App.css'
+import Login from './components/Login'
+import Signup from './components/Signup'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home')
@@ -59,6 +61,10 @@ function App() {
             </form>
           </div>
         )
+      case 'login':
+        return <Login />
+      case 'signup':
+        return <Signup />
       default:
         return <div className="page">Page not found</div>
     }
@@ -73,6 +79,8 @@ function App() {
           <button onClick={() => setCurrentPage('about')}>About</button>
           <button onClick={() => setCurrentPage('courses')}>Courses</button>
           <button onClick={() => setCurrentPage('contact')}>Contact</button>
+          <button onClick={() => setCurrentPage('login')}>Login</button>
+          <button onClick={() => setCurrentPage('signup')}>Sign Up</button>
         </nav>
       </header>
       <main>
