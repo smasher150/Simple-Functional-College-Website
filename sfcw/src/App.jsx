@@ -48,6 +48,27 @@ function App() {
             </div>
           </div>
         )
+      case 'admissions':
+        return (
+          <div className="page">
+            <h2>Admissions</h2>
+            <p>Join our community of learners. We offer a streamlined admissions process.</p>
+            <h3>Requirements</h3>
+            <ul>
+              <li>High school diploma or equivalent</li>
+              <li>Minimum GPA of 2.5</li>
+              <li>Application form and fee</li>
+            </ul>
+            <h3>Application Process</h3>
+            <ol>
+              <li>Submit online application</li>
+              <li>Provide transcripts</li>
+              <li>Schedule an interview</li>
+              <li>Receive admission decision</li>
+            </ol>
+            <button onClick={() => setCurrentPage('signup')}>Apply Now</button>
+          </div>
+        )
       case 'contact':
         return (
           <div className="page">
@@ -78,6 +99,7 @@ function App() {
           <button onClick={() => setCurrentPage('home')}>Home</button>
           <button onClick={() => setCurrentPage('about')}>About</button>
           <button onClick={() => setCurrentPage('courses')}>Courses</button>
+          <button onClick={() => setCurrentPage('admissions')}>Admissions</button>
           <button onClick={() => setCurrentPage('contact')}>Contact</button>
           <button onClick={() => setCurrentPage('login')}>Login</button>
           <button onClick={() => setCurrentPage('signup')}>Sign Up</button>
