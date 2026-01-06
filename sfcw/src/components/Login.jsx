@@ -1,70 +1,59 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { useForm } from '../hooks/useForm';
 
 function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
+  const { login } = useAuth();
+  const { values, errors, isSubmitting, setIsSubmitting, handleChange, reset, setError } = useForm({
+    email: '',
+    password: '',
+  });
+  const [success, setSuccess] = useState('');
 
-  const handleLogin = async (e) => {
-    e.preventDefault()
-    setError('')
-    setSuccess('')
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSuccess('');
 
-    // Basic validation
-    if (email && password) {
-      try {
-        const response = await fetch('http://localhost:5002/api/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        })
-
-        const data = await response.json()
-
-        if (response.ok) {
-          setSuccess('Login successful!')
-          localStorage.setItem('token', data.token)
-          // Reset form
-          setEmail('')
-          setPassword('')
-        } else {
-          setError(data.message || 'Login failed')
-        }
-      } catch (error) {
-        setError('Network error. Please try again.')
-      }
-    } else {
-      setError('Please fill in all fields')
+    try {
+      await login(values.email, values.password);
+      setSuccess('Login successful!');
+      reset();
+    } catch (error) {
+      setError('general', error.message);
+    } finally {
+      setIsSubmitting(false);
     }
-  }
+  };
 
   return (
     <div className="page">
       <h2>Login</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {errors.general && <p style={{ color: 'red' }}>{errors.general}</p>}
       {success && <p style={{ color: 'green' }}>{success}</p>}
-      <form className="auth-form" onSubmit={handleLogin}>
+      <form className="auth-form" onSubmit={handleSubmit}>
         <input
           type="email"
+          name="email"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={values.email}
+          onChange={handleChange}
           required
         />
         <input
           type="password"
+          name="password"
           placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={values.password}
+          onChange={handleChange}
           required
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Logging in...' : 'Login'}
+        </button>
       </form>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

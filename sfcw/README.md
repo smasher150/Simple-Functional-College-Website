@@ -1,18 +1,140 @@
-# React + Vite
+# Simple Functional College Website (SFCW)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive college website built with React and Vite for the frontend, and Node.js/Express with MongoDB for the backend.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Responsive Design**: Mobile-first approach with modern CSS
+- **User Authentication**: Sign up and login functionality
+- **Dynamic Routing**: Client-side routing with React Router
+- **State Management**: Context API for authentication state
+- **RESTful API**: Backend API with JWT authentication
+- **Database Integration**: MongoDB with Mongoose ODM
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+### Frontend
+- React 19
+- Vite
+- React Router DOM
+- Context API
+- Custom Hooks
+- Modern CSS
 
-Note: This will impact Vite dev & build performances.
+### Backend
+- Node.js
+- Express.js
+- MongoDB with Mongoose
+- JWT Authentication
+- bcryptjs for password hashing
+- CORS enabled
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+sfcw/
+├── src/
+│   ├── components/     # Reusable UI components
+│   ├── pages/         # Page components
+│   ├── context/       # React Context for state management
+│   ├── hooks/         # Custom React hooks
+│   ├── services/      # API service functions
+│   └── assets/        # Static assets
+├── backend/
+│   ├── controllers/   # Route controllers
+│   ├── models/        # MongoDB models
+│   ├── routes/        # API routes
+│   ├── middleware/    # Custom middleware
+│   ├── config/        # Configuration files
+│   └── utils/         # Utility functions
+└── public/            # Public assets
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- MongoDB (local or cloud instance)
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd sfcw
+   ```
+
+2. **Install frontend dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Install backend dependencies**
+   ```bash
+   cd backend
+   npm install
+   cd ..
+   ```
+
+4. **Environment Setup**
+
+   Copy the example environment files:
+   ```bash
+   cp .env.example .env
+   cp backend/.env.example backend/.env
+   ```
+
+   Update the environment variables in both `.env` files with your configuration.
+
+5. **Start MongoDB**
+
+   Make sure MongoDB is running on your system.
+
+6. **Start the development servers**
+
+   **Terminal 1: Backend**
+   ```bash
+   cd backend
+   npm run dev
+   ```
+
+   **Terminal 2: Frontend**
+   ```bash
+   npm run dev
+   ```
+
+7. **Open your browser**
+
+   Navigate to `http://localhost:5173` (or the port shown in terminal)
+
+## Available Scripts
+
+### Frontend
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+### Backend
+- `npm start` - Start production server
+- `npm run dev` - Start development server with nodemon
+
+## API Endpoints
+
+### Authentication
+- `POST /api/auth/signup` - User registration
+- `POST /api/auth/login` - User login
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests and linting
+5. Submit a pull request
+
+## License
+
+This project is licensed under the MIT License.

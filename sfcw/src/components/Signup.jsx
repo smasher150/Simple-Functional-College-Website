@@ -1,91 +1,84 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { useForm } from '../hooks/useForm';
 
 function Signup() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [error, setError] = useState('')
-  const [success, setSuccess] = useState('')
+  const { signup } = useAuth();
+  const { values, errors, isSubmitting, setIsSubmitting, handleChange, reset, setError } = useForm({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [success, setSuccess] = useState('');
 
-  const handleSignup = async (e) => {
-    e.preventDefault()
-    setError('')
-    setSuccess('')
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSuccess('');
 
-    // Basic validation
-    if (name && email && password && confirmPassword) {
-      if (password === confirmPassword) {
-        try {
-          const response = await fetch('http://localhost:5002/api/auth/signup', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, email, password }),
-          })
-
-          const data = await response.json()
-
-          if (response.ok) {
-            setSuccess('Signup successful!')
-            // Reset form
-            setName('')
-            setEmail('')
-            setPassword('')
-            setConfirmPassword('')
-          } else {
-            setError(data.message || 'Signup failed')
-          }
-        } catch (error) {
-          setError('Network error. Please try again.')
-        }
-      } else {
-        setError('Passwords do not match')
-      }
-    } else {
-      setError('Please fill in all fields')
+    if (values.password !== values.confirmPassword) {
+      setError('confirmPassword', 'Passwords do not match');
+      setIsSubmitting(false);
+      return;
     }
-  }
+
+    try {
+      await signup(values.name, values.email, values.password);
+      setSuccess('Signup successful!');
+      reset();
+    } catch (error) {
+      setError('general', error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="page">
       <h2>Sign Up</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {errors.general && <p style={{ color: 'red' }}>{errors.general}</p>}
       {success && <p style={{ color: 'green' }}>{success}</p>}
-      <form className="auth-form" onSubmit={handleSignup}>
+      <form className="auth-form" onSubmit={handleSubmit}>
         <input
           type="text"
+          name="name"
           placeholder="Full Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={values.name}
+          onChange={handleChange}
           required
         />
         <input
           type="email"
+          name="email"
           placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={values.email}
+          onChange={handleChange}
           required
         />
         <input
           type="password"
+          name="password"
           placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={values.password}
+          onChange={handleChange}
           required
         />
         <input
           type="password"
+          name="confirmPassword"
           placeholder="Confirm Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          value={values.confirmPassword}
+          onChange={handleChange}
           required
         />
-        <button type="submit">Sign Up</button>
+        {errors.confirmPassword && <p style={{ color: 'red' }}>{errors.confirmPassword}</p>}
+        <button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Signing up...' : 'Sign Up'}
+        </button>
       </form>
     </div>
-  )
+  );
 }
 
-export default Signup
+export default Signup;
