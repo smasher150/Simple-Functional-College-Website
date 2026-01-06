@@ -13,32 +13,38 @@ function Layout({ children }) {
   return (
     <div className="app">
       <header>
-        <h1>Simple College</h1>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/courses">Courses</Link>
-          <Link to="/admissions">Admissions</Link>
-          <Link to="/events">Events</Link>
-          <Link to="/contact">Contact</Link>
-          {isAuthenticated ? (
-            <>
-              <span>Welcome, {user?.name}</span>
-              <button onClick={handleLogout}>Logout</button>
-            </>
-          ) : (
-            <>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-            </>
-          )}
-        </nav>
+        <div className="container">
+          <h1>Simple College</h1>
+          <nav>
+            <Link to="/">🏠 Home</Link>
+            <Link to="/about">ℹ️ About</Link>
+            <Link to="/courses">📚 Courses</Link>
+            <Link to="/admissions">🎓 Admissions</Link>
+            <Link to="/events">📅 Events</Link>
+            <Link to="/contact">📞 Contact</Link>
+            {isAuthenticated ? (
+              <>
+                <span className="welcome-user">👋 Welcome, {user?.name}</span>
+                <button onClick={handleLogout}>🚪 Logout</button>
+              </>
+            ) : (
+              <>
+                <Link to="/login">🔐 Login</Link>
+                <Link to="/signup">✨ Sign Up</Link>
+              </>
+            )}
+          </nav>
+        </div>
       </header>
       <main>
-        {children}
+        <div className="container">
+          {children}
+        </div>
       </main>
       <footer>
-        <p>&copy; 2025 Simple College. All rights reserved.</p>
+        <div className="container">
+          <p>&copy; 2025 Simple College. All rights reserved.</p>
+        </div>
       </footer>
     </div>
   );

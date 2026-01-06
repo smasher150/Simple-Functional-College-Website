@@ -28,28 +28,57 @@ function Login() {
 
   return (
     <div className="page">
-      <h2>Login</h2>
-      {errors.general && <p style={{ color: 'red' }}>{errors.general}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>}
+      <h2>🔐 Login to Your Account</h2>
+      <p className="text-center mb-6">Welcome back! Please sign in to continue.</p>
+
+      {errors.general && (
+        <div className="message error">
+          ❌ {errors.general}
+        </div>
+      )}
+
+      {success && (
+        <div className="message success">
+          ✅ {success}
+        </div>
+      )}
+
       <form className="auth-form" onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={values.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={values.password}
-          onChange={handleChange}
-          required
-        />
+        <div>
+          <label htmlFor="email" className="block mb-2 font-medium">Email Address</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            value={values.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="password" className="block mb-2 font-medium">Password</label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            value={values.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
         <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Logging in...' : 'Login'}
+          {isSubmitting ? (
+            <>
+              <span className="loading"></span>
+              Signing in...
+            </>
+          ) : (
+            '🔐 Sign In'
+          )}
         </button>
       </form>
     </div>

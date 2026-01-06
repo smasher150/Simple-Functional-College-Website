@@ -36,45 +36,86 @@ function Signup() {
 
   return (
     <div className="page">
-      <h2>Sign Up</h2>
-      {errors.general && <p style={{ color: 'red' }}>{errors.general}</p>}
-      {success && <p style={{ color: 'green' }}>{success}</p>}
+      <h2>✨ Create Your Account</h2>
+      <p className="text-center mb-6">Join our community and start your learning journey today!</p>
+
+      {errors.general && (
+        <div className="message error">
+          ❌ {errors.general}
+        </div>
+      )}
+
+      {success && (
+        <div className="message success">
+          ✅ {success}
+        </div>
+      )}
+
       <form className="auth-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={values.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={values.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={values.password}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={values.confirmPassword}
-          onChange={handleChange}
-          required
-        />
-        {errors.confirmPassword && <p style={{ color: 'red' }}>{errors.confirmPassword}</p>}
+        <div>
+          <label htmlFor="name" className="block mb-2 font-medium">Full Name</label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            placeholder="Enter your full name"
+            value={values.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email" className="block mb-2 font-medium">Email Address</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            value={values.email}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="password" className="block mb-2 font-medium">Password</label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            placeholder="Create a strong password"
+            value={values.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="confirmPassword" className="block mb-2 font-medium">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm your password"
+            value={values.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+          {errors.confirmPassword && (
+            <p className="text-sm text-red-600 mt-1">⚠️ {errors.confirmPassword}</p>
+          )}
+        </div>
+
         <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Signing up...' : 'Sign Up'}
+          {isSubmitting ? (
+            <>
+              <span className="loading"></span>
+              Creating account...
+            </>
+          ) : (
+            '🚀 Create Account'
+          )}
         </button>
       </form>
     </div>
