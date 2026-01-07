@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   /* Color Palette */
   --primary-color: #2563eb;
@@ -207,4 +211,107 @@ input::placeholder, textarea::placeholder {
   .container {
     padding: 0 var(--spacing-2);
   }
+}
+
+/* Dark Mode Styles */
+.dark {
+  --primary-color: #3b82f6;
+  --primary-dark: #1e40af;
+  --primary-light: #60a5fa;
+  --secondary-color: #64748b;
+  --accent-color: #fbbf24;
+  --success-color: #34d399;
+  --error-color: #f87171;
+  --warning-color: #fbbf24;
+
+  --white: #1e293b;
+  --gray-50: #0f172a;
+  --gray-100: #1e293b;
+  --gray-200: #334155;
+  --gray-300: #475569;
+  --gray-400: #64748b;
+  --gray-500: #94a3b8;
+  --gray-600: #cbd5e1;
+  --gray-700: #e2e8f0;
+  --gray-800: #f1f5f9;
+  --gray-900: #f8fafc;
+}
+
+.dark body {
+  background-color: var(--gray-900);
+  color: var(--gray-100);
+}
+
+.dark .app {
+  background: linear-gradient(135deg, var(--gray-900) 0%, var(--gray-800) 100%);
+}
+
+.dark header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+}
+
+.dark .course,
+.dark .message,
+.dark .auth-form {
+  background-color: var(--gray-800);
+  border-color: var(--gray-700);
+  color: var(--gray-100);
+}
+
+.dark .course h3,
+.dark .message,
+.dark .auth-form label {
+  color: var(--gray-100);
+}
+
+.dark .course p,
+.dark .auth-form input,
+.dark .auth-form textarea {
+  color: var(--gray-300);
+}
+
+.dark .auth-form input,
+.dark .auth-form textarea {
+  background-color: var(--gray-700);
+  border-color: var(--gray-600);
+  color: var(--gray-100);
+}
+
+.dark .auth-form input:focus,
+.dark .auth-form textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Dark Mode Profile Dropdown */
+.dark .profile-dropdown {
+  background: var(--gray-800);
+  border-color: var(--gray-700);
+  color: var(--gray-100);
+}
+
+.dark .profile-dropdown .dropdown-header {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+}
+
+.dark .profile-dropdown .dropdown-header .user-name,
+.dark .profile-dropdown .dropdown-header .user-email {
+  color: var(--white);
+}
+
+.dark .profile-dropdown .dropdown-item {
+  color: var(--gray-300);
+}
+
+.dark .profile-dropdown .dropdown-item:hover {
+  background: var(--gray-700);
+  color: var(--primary-light);
+}
+
+.dark .profile-dropdown .dropdown-item.logout {
+  color: var(--error-color);
+}
+
+.dark .profile-dropdown .dropdown-item.logout:hover {
+  background: rgba(239, 68, 68, 0.1);
 }

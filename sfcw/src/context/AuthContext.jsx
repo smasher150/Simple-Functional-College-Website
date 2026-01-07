@@ -3,6 +3,7 @@ import { authService } from '../services/authService';
 
 const AuthContext = createContext();
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -19,7 +20,12 @@ export const AuthProvider = ({ children }) => {
     const initAuth = () => {
       const token = authService.getToken();
       if (token) {
-        setUser({ token });
+        // In a real app, you'd decode the token or fetch user data
+        // For now, we'll store user data in localStorage too
+        const userData = localStorage.getItem('user');
+        if (userData) {
+          setUser(JSON.parse(userData));
+        }
       }
       setLoading(false);
     };
@@ -30,16 +36,20 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     const data = await authService.login(email, password);
     setUser(data.user);
+    localStorage.setItem('user', JSON.stringify(data.user));
     return data;
   };
 
   const signup = async (name, email, password) => {
     const data = await authService.signup(name, email, password);
+    setUser(data.user);
+    localStorage.setItem('user', JSON.stringify(data.user));
     return data;
   };
 
   const logout = () => {
     authService.logout();
+    localStorage.removeItem('user');
     setUser(null);
   };
 

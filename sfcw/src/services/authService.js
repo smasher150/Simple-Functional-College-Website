@@ -1,38 +1,37 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5002/api';
-
+// Mock authentication service - no backend required
 export const authService = {
   async login(email, password) {
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || 'Login failed');
+    // Simple validation - in a real app, this would be more robust
+    if (!email || !password) {
+      throw new Error('Email and password are required');
     }
 
-    return response.json();
+    // Mock successful login
+    const mockUser = { id: 1, name: 'User', email };
+    const mockToken = 'mock-jwt-token-' + Date.now();
+
+    localStorage.setItem('token', mockToken);
+    return { user: mockUser, token: mockToken };
   },
 
   async signup(name, email, password) {
-    const response = await fetch(`${API_BASE_URL}/auth/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, email, password }),
-    });
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500));
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || 'Signup failed');
+    // Simple validation
+    if (!name || !email || !password) {
+      throw new Error('All fields are required');
     }
 
-    return response.json();
+    // Mock successful signup
+    const mockUser = { id: 1, name, email };
+    const mockToken = 'mock-jwt-token-' + Date.now();
+
+    localStorage.setItem('token', mockToken);
+    return { user: mockUser, token: mockToken };
   },
 
   logout() {
